@@ -2,90 +2,66 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Мій Месенджер</title>
+  <title>Месенджер</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #2f3136;
-      color: #fff;
-      margin: 0;
-      display: flex;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 250px;
-      background: #202225;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    .chat {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    .message {
-      margin: 5px 0;
-      padding: 8px;
-      background: #36393f;
-      border-radius: 5px;
-    }
-    .input-area {
-      display: flex;
-      padding: 10px;
-      background: #202225;
-    }
-    .input-area input {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-    }
-    .input-area button {
-      margin-left: 10px;
-      padding: 8px 12px;
-      background: #5865f2;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+    body { font-family: Arial; background:#2f3136; color:#fff; margin:0; }
+    .container { display:flex; height:100vh; }
+    .sidebar { width:200px; background:#202225; padding:10px; }
+    .chat { flex:1; display:flex; flex-direction:column; }
+    .messages { flex:1; padding:10px; overflow-y:auto; }
+    .message { background:#36393f; margin:5px 0; padding:8px; border-radius:5px; }
+    .input-area { display:flex; padding:10px; background:#202225; }
+    .input-area input { flex:1; padding:8px; border:none; border-radius:5px; }
+    .input-area button { margin-left:10px; padding:8px; background:#5865f2; border:none; color:#fff; border-radius:5px; }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h3>Сервери</h3>
-    <ul>
-      <li>🌐 Головний</li>
-      <li>🎮 Ігровий</li>
-      <li>💬 Чат</li>
-    </ul>
-  </div>
-  <div class="chat">
-    <div class="messages" id="messages"></div>
-    <div class="input-area">
-      <input type="text" id="msgInput" placeholder="Напиши повідомлення...">
-      <button onclick="sendMessage()">Відправити</button>
+  <div class="container">
+    <div class="sidebar">
+      <h3>Меню</h3>
+      <button onclick="showLogin()">Логін</button>
+      <button onclick="showRegister()">Реєстрація</button>
+    </div>
+    <div class="chat">
+      <div class="messages" id="messages"></div>
+      <div class="input-area">
+        <input id="msgInput" placeholder="Напиши повідомлення...">
+        <button onclick="sendMessage()">Відправити</button>
+      </div>
     </div>
   </div>
 
   <script>
-    const messagesDiv = document.getElementById("messages");
-    const msgInput = document.getElementById("msgInput");
+    let socket;
+    let username = "";
+
+    function connectServer() {
+      socket = new WebSocket("wss://your-server-url"); // сервер на Node.js
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "message";
+        msgDiv.textContent = data.user + ": " + data.text;
+        document.getElementById("messages").appendChild(msgDiv);
+      };
+    }
 
     function sendMessage() {
-      const text = msgInput.value.trim();
-      if (text === "") return;
-      const msg = document.createElement("div");
-      msg.className = "message";
-      msg.textContent = text;
-      messagesDiv.appendChild(msg);
-      msgInput.value = "";
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      const text = document.getElementById("msgInput").value;
+      if (text.trim() === "") return;
+      socket.send(JSON.stringify({ user: username, text }));
+      document.getElementById("msgInput").value = "";
+    }
+
+    function showLogin() {
+      username = prompt("Введи логін:");
+      connectServer();
+    }
+
+    function showRegister() {
+      username = prompt("Створи логін:");
+      alert("Тебе зареєстровано як " + username);
+      connectServer();
     }
   </script>
 </body>
