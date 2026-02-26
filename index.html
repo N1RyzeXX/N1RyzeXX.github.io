@@ -2,60 +2,120 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Мій міні-сайт</title>
+  <title>Мій масштабний сайт</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
       background: #f4f4f4;
+      line-height: 1.6;
     }
     header {
-      background: #4CAF50;
+      background: linear-gradient(90deg, #4CAF50, #2E7D32);
       color: white;
-      padding: 20px;
+      padding: 30px;
       text-align: center;
     }
     nav {
       background: #333;
-      padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     nav a {
       color: white;
-      margin: 0 10px;
+      padding: 15px;
       text-decoration: none;
+      transition: background 0.3s;
     }
     nav a:hover {
-      text-decoration: underline;
+      background: #4CAF50;
     }
     main {
       padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 40px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    section img {
+      max-width: 100%;
+      border-radius: 8px;
     }
     footer {
       background: #333;
       color: white;
       text-align: center;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+      padding: 15px;
+      margin-top: 40px;
+    }
+    /* Адаптивність */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        text-align: center;
+        border-top: 1px solid #444;
+      }
+    }
+    /* Кнопка */
+    .btn {
+      display: inline-block;
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #2E7D32;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Ласкаво просимо на мій сайт!</h1>
+    <h1>Мій масштабний сайт</h1>
+    <p>Тут є більше контенту та стилю</p>
   </header>
   <nav>
-    <a href="#">Головна</a>
-    <a href="#">Про мене</a>
-    <a href="#">Контакти</a>
+    <a href="#home">Головна</a>
+    <a href="#about">Про мене</a>
+    <a href="#gallery">Галерея</a>
+    <a href="#contact">Контакти</a>
   </nav>
   <main>
-    <h2>Привіт!</h2>
-    <p>Це приклад простого міні-сайту на HTML і CSS. Тут можна розмістити будь-яку інформацію: текст, фото, посилання.</p>
+    <section id="home">
+      <h2>Головна сторінка</h2>
+      <p>Ласкаво просимо! Це приклад більш масштабного сайту з кількома секціями.</p>
+      <a href="#contact" class="btn">Зв'язатися</a>
+    </section>
+    <section id="about">
+      <h2>Про мене</h2>
+      <p>Тут можна написати інформацію про себе, свої інтереси, досвід чи хобі.</p>
+    </section>
+    <section id="gallery">
+      <h2>Галерея</h2>
+      <img src="https://via.placeholder.com/800x400" alt="Приклад зображення">
+      <p>Це місце для фото чи картинок.</p>
+    </section>
+    <section id="contact">
+      <h2>Контакти</h2>
+      <p>Напишіть мені на email: <strong>example@email.com</strong></p>
+    </section>
   </main>
   <footer>
-    &copy; 2026 Мій міні-сайт
+    &copy; 2026 Мій масштабний сайт
   </footer>
 </body>
 </html>
