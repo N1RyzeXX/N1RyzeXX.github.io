@@ -2,120 +2,91 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Мій масштабний сайт</title>
+  <title>Мій Месенджер</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      line-height: 1.6;
-    }
-    header {
-      background: linear-gradient(90deg, #4CAF50, #2E7D32);
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-    nav {
-      background: #333;
+      background: #2f3136;
+      color: #fff;
+      margin: 0;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      height: 100vh;
     }
-    nav a {
-      color: white;
-      padding: 15px;
-      text-decoration: none;
-      transition: background 0.3s;
+    .sidebar {
+      width: 250px;
+      background: #202225;
+      padding: 10px;
+      overflow-y: auto;
     }
-    nav a:hover {
-      background: #4CAF50;
+    .chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
-    main {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
+    .messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
     }
-    section {
-      margin-bottom: 40px;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    section img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-    /* Адаптивність */
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-      }
-      nav a {
-        text-align: center;
-        border-top: 1px solid #444;
-      }
-    }
-    /* Кнопка */
-    .btn {
-      display: inline-block;
-      background: #4CAF50;
-      color: white;
-      padding: 10px 20px;
+    .message {
+      margin: 5px 0;
+      padding: 8px;
+      background: #36393f;
       border-radius: 5px;
-      text-decoration: none;
-      transition: background 0.3s;
     }
-    .btn:hover {
-      background: #2E7D32;
+    .input-area {
+      display: flex;
+      padding: 10px;
+      background: #202225;
+    }
+    .input-area input {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+    }
+    .input-area button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      background: #5865f2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Мій масштабний сайт</h1>
-    <p>Тут є більше контенту та стилю</p>
-  </header>
-  <nav>
-    <a href="#home">Головна</a>
-    <a href="#about">Про мене</a>
-    <a href="#gallery">Галерея</a>
-    <a href="#contact">Контакти</a>
-  </nav>
-  <main>
-    <section id="home">
-      <h2>Головна сторінка</h2>
-      <p>Ласкаво просимо! Це приклад більш масштабного сайту з кількома секціями.</p>
-      <a href="#contact" class="btn">Зв'язатися</a>
-    </section>
-    <section id="about">
-      <h2>Про мене</h2>
-      <p>Тут можна написати інформацію про себе, свої інтереси, досвід чи хобі.</p>
-    </section>
-    <section id="gallery">
-      <h2>Галерея</h2>
-      <img src="https://via.placeholder.com/800x400" alt="Приклад зображення">
-      <p>Це місце для фото чи картинок.</p>
-    </section>
-    <section id="contact">
-      <h2>Контакти</h2>
-      <p>Напишіть мені на email: <strong>example@email.com</strong></p>
-    </section>
-  </main>
-  <footer>
-    &copy; 2026 Мій масштабний сайт
-  </footer>
+  <div class="sidebar">
+    <h3>Сервери</h3>
+    <ul>
+      <li>🌐 Головний</li>
+      <li>🎮 Ігровий</li>
+      <li>💬 Чат</li>
+    </ul>
+  </div>
+  <div class="chat">
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input type="text" id="msgInput" placeholder="Напиши повідомлення...">
+      <button onclick="sendMessage()">Відправити</button>
+    </div>
+  </div>
+
+  <script>
+    const messagesDiv = document.getElementById("messages");
+    const msgInput = document.getElementById("msgInput");
+
+    function sendMessage() {
+      const text = msgInput.value.trim();
+      if (text === "") return;
+      const msg = document.createElement("div");
+      msg.className = "message";
+      msg.textContent = text;
+      messagesDiv.appendChild(msg);
+      msgInput.value = "";
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+  </script>
 </body>
 </html>
